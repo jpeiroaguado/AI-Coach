@@ -91,9 +91,11 @@ AI-Coach/
 │   └── prompts.py              ← Prompts dinámicos por modo y perfil
 │
 ├── frontend/
-│   ├── index.html              ← Interfaz principal
-│   ├── style.css               ← Estilos y diseño responsive
-│   └── app.js                  ← Lógica del formulario + fetch a Flask
+├── index.html                  ← Interfaz principal
+├── css/
+│   └── style.css               ← Estilos y diseño responsive
+└── js/
+│   └── app.js                  ← Lógica del formulario + fetch a Flask                
 │
 └── docs/
     └── arquitectura.png        ← Diagrama del sistema para la presentación
