@@ -16,12 +16,12 @@ client = boto3.client(
     region_name=os.getenv("AWS_DEFAULT_REGION", "eu-south-2")
 )
 
-MODEL_ID = "amazon.nova-2-lite-v1:0"
-
+MODEL_ID = "eu.amazon.nova-2-lite-v1:0"
 
 @app.route("/")
 def index():
     return send_from_directory(FRONTEND_DIR, 'index.html')
+
 @app.route("/css/<path:filename>")
 def serve_css(filename):
     return send_from_directory(os.path.join(FRONTEND_DIR, 'css'), filename)
@@ -52,7 +52,12 @@ def generar_plan():
 
         respuesta_texto = response["output"]["message"]["content"][0]["text"]
 
-        # Intentar parsear como JSON
+        # Limpiar bloques markdown si el modelo los añade
+        if "```json" in respuesta_texto:
+            respuesta_texto = respuesta_texto.split("```json")[1].split("```")[0].strip()
+        elif "```" in respuesta_texto:
+            respuesta_texto = respuesta_texto.split("```")[1].split("```")[0].strip()
+
         try:
             plan = json.loads(respuesta_texto)
         except json.JSONDecodeError:
@@ -62,7 +67,6 @@ def generar_plan():
 
     except Exception as e:
         return jsonify({"ok": False, "error": str(e)}), 500
-
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
