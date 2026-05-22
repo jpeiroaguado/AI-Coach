@@ -95,14 +95,21 @@ async function generarPlan(datos) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ ...datos, historial })
     });
+
     const resultado = await response.json();
-    if (!resultado.ok) throw new Error(resultado.error);
+    console.log("Respuesta backend:", resultado);
+
+    if (!response.ok || !resultado.ok) {
+      throw new Error(resultado.error || "Error desconocido del servidor");
+    }
 
     historial.push({ role: "user", content: JSON.stringify(datos) });
     historial.push({ role: "assistant", content: JSON.stringify(resultado.plan) });
 
     renderPlan(resultado.plan);
+
   } catch (err) {
+    console.error("Error completo:", err);
     alert("Error al generar el plan: " + err.message);
   } finally {
     mostrarLoading(false);
