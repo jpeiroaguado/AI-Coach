@@ -1,3 +1,7 @@
-echo ".env" >> .gitignore
-git add .gitignore.env
+cat >> .gitignore << 'EOF'
 .env
+test_bedrock.py
+__pycache__/
+*.pyc
+*.csv
+EOF

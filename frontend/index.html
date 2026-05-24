@@ -179,8 +179,15 @@
     <section class="resultado hidden" id="resultado">
       <div class="resultado-header">
         <h2 id="plan-nombre">Tu plan de entrenamiento</h2>
-        <button class="btn-reset" onclick="resetear()">← Nuevo plan</button>
+        <div class="resultado-acciones">
+          <button class="btn-imprimir" onclick="imprimirPlan()">🖨️ Imprimir PDF</button>
+          <button class="btn-reset" onclick="resetear()">← Nuevo plan</button>
+        </div>
       </div>
+
+      <!-- Imagen generada por Titan (se rellena desde app.js) -->
+      <div id="imagen-portada" class="hidden"></div>
+
       <div id="dias-container"></div>
       <div class="consejos-box hidden" id="consejos-box"></div>
       <div class="feedback-box">

@@ -104,10 +104,12 @@ Devuelve ÚNICAMENTE un JSON válido con esta estructura exacta, sin texto adici
 Adapta los ejercicios al deporte, la categoría y la fase de temporada.
 
 IMPORTANTE:
-- El nombre de los ejercicios debe ser limpio y profesional.
-- NO añadas el objetivo físico ({objetivo_fisico}) dentro del nombre del ejercicio.
-- Evita modificar los nombres originales de los ejercicios según el objetivo físico.
-- Mantén los nombres técnicos reales de los ejercicios.
+- Usa los nombres técnicos estándar de los ejercicios (Sentadilla, Burpee, Sprint...).
+- El objetivo físico "{objetivo_fisico}" define la SELECCIÓN e INTENSIDAD, NO el nombre del ejercicio.
+- NUNCA añadas el objetivo físico como adjetivo en el nombre del ejercicio.
+- MAL: "Sentadillas con salto explosivo", "Burpees explosivos", "Sprint explosivo"
+- BIEN: "Sentadillas con salto", "Burpees", "Sprint 10m"
+- Los ejercicios deben ser apropiados para {objetivo_fisico}, pero con nombres técnicos limpios.
 
 La sesión debe durar aproximadamente {duracion} minutos.."""
 
