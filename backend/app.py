@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 from dotenv import load_dotenv
+from prompts import construir_prompt, construir_prompt_imagen_portada, construir_prompt_imagen_dia
 import boto3
 import json
 import os
@@ -49,9 +50,7 @@ def generar_plan():
         datos = request.json
         historial = datos.get("historial", [])
 
-        from prompts import construir_prompt
         prompt = construir_prompt(datos)
-
         mensajes = historial + [{"role": "user", "content": prompt}]
 
         response = client.converse(
@@ -87,38 +86,7 @@ def generar_plan():
 def generar_imagen():
     try:
         datos = request.json
-
-        modo = datos.get("modo", "personal")
-        deporte = datos.get("deporte") or "entrenamiento físico"
-        objetivo = datos.get("objetivo") or datos.get("objetivo_fisico") or "mejora del rendimiento"
-        fase = datos.get("fase") or "temporada general"
-        nivel = datos.get("nivel") or datos.get("categoria") or "intermedio"
-        dias = datos.get("dias") or datos.get("duracion") or 3
-        equipamiento = datos.get("equipamiento") or "material deportivo básico"
-
-        # Descripción base según modo
-        if modo == "preparador":
-            descripcion = (
-                f"high performance {deporte} training session, "
-                f"goal: {objetivo}, phase: {fase}, level: {nivel}, "
-                f"session duration or frequency: {dias}"
-            )
-        else:
-            descripcion = (
-                f"personal training plan, goal: {objetivo}, "
-                f"{dias} days per week, using {equipamiento}, "
-                f"fitness level: {nivel}"
-            )
-
-        prompt = (
-            "Wide cinematic illustration, modern sports environment. "
-            f"Main theme: {descripcion}. "
-            "Show athletes training or preparing in a setting related to the sport "
-            f"({deporte}), not necessarily a classic gym: it can be a court, track, pool "
-            "or outdoor field depending on the sport. "
-            "Dynamic but clean composition, soft gradients, warm lighting, "
-            "no text, no logos, no UI elements, semi-realistic but stylized."
-        )
+        prompt = construir_prompt_imagen_portada(datos)
 
         body = json.dumps({
             "prompt": prompt,
@@ -143,35 +111,13 @@ def generar_imagen():
         import traceback
         print(traceback.format_exc())
         return jsonify({"ok": False, "error": str(e)}), 500
-    
+
 
 @app.route("/generar-imagen-dia", methods=["POST"])
 def generar_imagen_dia():
     try:
         datos = request.json
-        dia = datos.get("dia", "Día 1")
-        ejercicios = datos.get("ejercicios", [])      # lista de strings
-        grupo = datos.get("grupo_muscular", "")       # ej. "Pecho y Tríceps"
-        objetivo_global = datos.get("objetivo", "")   # ej. "pérdida de peso", "mejorar resistencia corriendo"
-
-        ejercicios_limpios = [e for e in ejercicios if e]
-        base_musculos = grupo or ", ".join(ejercicios_limpios[:2]) or "full body"
-
-        concepto_objetivo = objetivo_global or "general fitness"
-
-        prompt = (
-            f"Minimalist fitness anatomy diagram for {dia}. "
-            f"Target muscle groups: {base_musculos}. "
-            f"Training goal: {concepto_objetivo}. "
-            "Show a single human body silhouette in neutral grey tones, "
-            "without any colored shading on most of the body one or two silhouettes, "
-            "depending on how many parts are needed to show that muscle group. "
-            "Only highlight the target muscle areas using bright color glow or gradients "
-            "Exactly on chest, arms, legs or back according to the target muscle groups. "
-            "The rest of the silhouette must remain grey and uncolored. "
-            "Pure white background (#FFFFFF), flat semi-realistic style, "
-            "no exercise sequence, no equipment, no text, no numbers, no labels, no UI elements."
-        )
+        prompt = construir_prompt_imagen_dia(datos)
 
         body = json.dumps({
             "prompt": prompt,
