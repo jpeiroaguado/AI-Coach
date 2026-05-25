@@ -424,6 +424,9 @@ select option { background: var(--bg-card2); }
 }
 
 /* ===== FOOTER ===== */
+.print-only {
+  display: none;
+}
 footer {
   text-align: center;
   padding: 24px;
@@ -672,5 +675,31 @@ textarea:focus { border-color: var(--primary); }
   }
   .ejercicio {
     font-size: 0.8rem;
+  }
+   .no-print {
+    display: none !important;
+  }
+
+  /* Mostrar solo en impresión */
+  .print-only {
+    display: block !important;
+  }
+
+  /* Estilos del pie de documento */
+  .print-footer {
+    margin-top: 32px;
+    padding-top: 12px;
+    border-top: 1px solid #ccc;
+    font-size: 11px;
+    color: #555;
+    text-align: center;
+    line-height: 1.6;
+  }
+
+  .print-footer-meta {
+    margin-top: 6px;
+    font-size: 10px;
+    color: #999;
+    font-style: italic;
   }
 }

@@ -190,12 +190,22 @@
 
       <div id="dias-container"></div>
       <div class="consejos-box hidden" id="consejos-box"></div>
-      <div class="feedback-box">
-        <h3>¿Quieres ajustar el plan?</h3>
-        <div class="feedback-input-row">
-          <input type="text" id="feedback-input" placeholder='Ej: "hazlo menos intenso" o "quita los ejercicios de suelo"' />
-          <button onclick="enviarFeedback()" class="btn-feedback">Ajustar ✨</button>
+      <div class="feedback-section no-print">
+        <div class="feedback-box">
+          <h3>¿Quieres ajustar el plan?</h3>
+          <div class="feedback-input-row">
+            <input type="text" id="feedback-input" placeholder='Ej: "hazlo menos intenso" o "quita los ejercicios de suelo"' />
+            <button onclick="enviarFeedback()" class="btn-feedback">Ajustar ✨</button>
+          </div>
         </div>
+      </div>
+      <!-- Pie visible solo en impresión -->
+      <div class="print-footer print-only">
+        <hr>
+        <p>
+          ⚠️ Este plan de entrenamiento es <strong>orientativo</strong> y ha sido generado por inteligencia artificial. 
+          No sustituye el criterio de un preparador físico ni de un profesional de la salud.
+        </p>
       </div>
     </section>
 
